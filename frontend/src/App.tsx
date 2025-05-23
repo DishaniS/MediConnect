@@ -1,12 +1,8 @@
 import React from 'react';
-import HelloWorld from './components/HelloWorld';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
-  return (
-    <div>
-      <HelloWorld name="Dishani" />
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
