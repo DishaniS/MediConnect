@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MediConnect API",
+    "version": "1.0.0",
+    "description": "API documentation for MediConnect"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Welcome route",
+        "responses": {
+          "200": {
+            "description": "Server running"
+          }
+        }
+      }
+    }
+  }
+}
