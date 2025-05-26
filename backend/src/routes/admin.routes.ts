@@ -1,9 +1,9 @@
 import { Router } from 'express';
+import { verifyToken, authorizeRoles } from '../middleware/auth.middleware';
+import { getAllUsers } from '../controllers/admin.controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('Admin route working ✅');
-});
+router.get('/users', verifyToken, authorizeRoles('admin'), getAllUsers);
 
 export default router;
