@@ -3,27 +3,33 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+// Middleware to verify JWT token
+export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
+  if (!authHeader) {
+    res.status(401).json({ error: 'No token provided' });
+    return;
+  }
 
   const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    (req as any).user = decoded; // Attach user to request
+    (req as any).user = decoded;
     next();
   } catch (err) {
     res.status(401).json({ error: 'Invalid token' });
   }
 };
 
+// Middleware to check user role
 export const authorizeRoles = (...roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const user = (req as any).user;
-    if (!roles.includes(user.role)) {
-      return res.status(403).json({ error: 'Access denied' });
+    if (!user || !roles.includes(user.role)) {
+      res.status(403).json({ error: 'Access denied' });
+      return;
     }
     next();
   };
