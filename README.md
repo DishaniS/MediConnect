@@ -1,4 +1,4 @@
-Here's a complete, clean, and production-ready **`README.md`** file for your MediConnect project. It includes:
+MediConnect project includes:
 
 - 📦 Project description
 - 🧠 Tech stack
@@ -9,7 +9,6 @@ Here's a complete, clean, and production-ready **`README.md`** file for your Med
 
 ---
 
-## ✅ `README.md` – Copy & Paste
 
 ```md
 # 🏥 MediConnect
