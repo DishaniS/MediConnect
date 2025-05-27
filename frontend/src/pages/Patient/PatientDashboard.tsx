@@ -18,18 +18,15 @@ const PatientDashboard = () => {
       const token = localStorage.getItem('token');
 
       try {
-        const response = await fetch('http://localhost:5000/api/patients', {
+        const res = await fetch('http://localhost:5000/api/patients', {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
           },
         });
 
-        const data = await response.json();
+        const data = await res.json();
 
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to fetch patients');
-        }
+        if (!res.ok) throw new Error(data.error || 'Failed to fetch patients');
 
         setPatients(data);
       } catch (err: any) {
@@ -42,10 +39,16 @@ const PatientDashboard = () => {
 
   return (
     <div>
-      <h2>Patient Dashboard</h2>
+      <h2>Welcome to Patient Dashboard</h2>
       <LogoutButton />
-      <h3>Patient List</h3>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <ul>
+        {patients.map((p) => (
+          <li key={p.id}>
+            <strong>{p.name}</strong> ({p.email}) - {p.age} years, {p.gender}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
