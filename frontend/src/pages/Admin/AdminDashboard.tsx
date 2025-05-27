@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Login = () => {
-  return <div>Login Page</div>;
+const AdminDashboard = () => {
+  return <h2>Welcome to Admin Dashboard</h2>;
 };
 
-export default Login;
+export default AdminDashboard;

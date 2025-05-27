@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Login = () => {
-  return <div>Login Page</div>;
+const DoctorDashboard = () => {
+  return <h2>Welcome to Doctor Dashboard</h2>;
 };
 
-export default Login;
+export default DoctorDashboard;
