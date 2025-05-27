@@ -214,8 +214,3 @@ This project is licensed under the MIT License.
 ```
 
 ---
-
-Let me know if you'd like to:
-- Add Swagger API docs
-- Deploy to Render / Vercel
-- Or generate a Postman collection for testing endpoints!

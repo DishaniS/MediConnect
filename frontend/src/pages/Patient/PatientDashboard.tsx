@@ -43,7 +43,7 @@ const PatientDashboard = () => {
       <LogoutButton />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>
-        {patients.map((p) => (
+        {Array.isArray(patients) && patients.map((p) => (
           <li key={p.id}>
             <strong>{p.name}</strong> ({p.email}) - {p.age} years, {p.gender}
           </li>
