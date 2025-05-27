@@ -11,14 +11,33 @@ import TextInput from '../../components/ui/TextInput';
 import SubmitButton from '../../components/ui/SubmitButton';
 
 const Login = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: data.get('email'),
+        password: data.get('password'),
+      }),
     });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('role', result.user.role);
+
+      if (result.user.role === 'patient') window.location.href = '/patient';
+      else if (result.user.role === 'doctor') window.location.href = '/doctor';
+      else if (result.user.role === 'admin') window.location.href = '/admin';
+    } else {
+      alert(result.error || 'Login failed');
+    }
   };
+
 
   return (
     <Container component="main" maxWidth="xs">
