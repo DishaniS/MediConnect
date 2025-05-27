@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LogoutButton from '../../components/ui/LogoutButton';
 
 interface Patient {
   id: number;
@@ -42,6 +43,8 @@ const PatientDashboard = () => {
   return (
     <div>
       <h2>Patient Dashboard</h2>
+      <LogoutButton />
+      <h3>Patient List</h3>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
