@@ -12,11 +12,24 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      {token && role === 'patient' && <Route path="/patient" element={<PatientDashboard />} />}
-      {token && role === 'doctor' && <Route path="/doctor" element={<DoctorDashboard />} />}
-      {token && role === 'admin' && <Route path="/admin" element={<AdminDashboard />} />}
+      <Route
+        path="/login"
+        element={token ? <Navigate to={`/${role}`} /> : <Login />}
+      />
+      <Route
+        path="/register"
+        element={token ? <Navigate to={`/${role}`} /> : <Register />}
+      />
+      {token && role === 'patient' && (
+        <Route path="/patient" element={<PatientDashboard />} />
+      )}
+      {token && role === 'doctor' && (
+        <Route path="/doctor" element={<DoctorDashboard />} />
+      )}
+      {token && role === 'admin' && (
+        <Route path="/admin" element={<AdminDashboard />} />
+      )}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
