@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import {
+  Container, Typography, Table, TableHead, TableRow,
+  TableCell, TableBody, Paper
+} from '@mui/material';
 import LogoutButton from '../../components/ui/LogoutButton';
 
 interface Patient {
@@ -19,13 +23,10 @@ const DoctorDashboard = () => {
 
       try {
         const res = await fetch('http://localhost:5000/api/patients', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.error || 'Failed to fetch patients');
 
         setPatients(data);
@@ -38,18 +39,34 @@ const DoctorDashboard = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Welcome to Doctor Dashboard</h2>
+    <Container>
+      <Typography variant="h4" gutterBottom>Doctor Dashboard</Typography>
       <LogoutButton />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
-        {patients.map((p) => (
-          <li key={p.id}>
-            <strong>{p.name}</strong> ({p.email}) - {p.age} years, {p.gender}
-          </li>
-        ))}
-      </ul>
-    </div>
+      {error && <Typography color="error">{error}</Typography>}
+
+      <Paper sx={{ mt: 2, p: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Age</TableCell>
+              <TableCell>Gender</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {patients.map((p) => (
+              <TableRow key={p.id}>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>{p.email}</TableCell>
+                <TableCell>{p.age}</TableCell>
+                <TableCell>{p.gender}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Container>
   );
 };
 
