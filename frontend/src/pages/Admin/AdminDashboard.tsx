@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import {
+  Container, Typography, Table, TableHead, TableRow,
+  TableCell, TableBody, Paper
+} from '@mui/material';
 import LogoutButton from '../../components/ui/LogoutButton';
 
 interface User {
@@ -19,13 +23,10 @@ const AdminDashboard = () => {
 
       try {
         const res = await fetch('http://localhost:5000/api/admin/users', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.error || 'Failed to fetch users');
 
         setUsers(data);
@@ -38,18 +39,32 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Welcome to Admin Dashboard</h2>
+    <Container>
+      <Typography variant="h4" gutterBottom>Admin Dashboard</Typography>
       <LogoutButton />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
-        {users.map((u) => (
-          <li key={u.id}>
-            {u.first_name} {u.last_name} — {u.email} ({u.role})
-          </li>
-        ))}
-      </ul>
-    </div>
+      {error && <Typography color="error">{error}</Typography>}
+
+      <Paper sx={{ mt: 2, p: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Role</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((u) => (
+              <TableRow key={u.id}>
+                <TableCell>{u.first_name} {u.last_name}</TableCell>
+                <TableCell>{u.email}</TableCell>
+                <TableCell>{u.role}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Container>
   );
 };
 
