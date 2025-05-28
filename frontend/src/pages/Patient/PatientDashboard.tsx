@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import LogoutButton from '../../components/ui/LogoutButton';
+import {
+  Container, Typography, Table, TableHead, TableRow,
+  TableCell, TableBody, Paper
+} from '@mui/material';
 
 interface Patient {
   id: number;
@@ -38,18 +42,34 @@ const PatientDashboard = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Welcome to Patient Dashboard</h2>
+    <Container>
+      <Typography variant="h4" gutterBottom>Patient Dashboard</Typography>
       <LogoutButton />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
-        {Array.isArray(patients) && patients.map((p) => (
-          <li key={p.id}>
-            <strong>{p.name}</strong> ({p.email}) - {p.age} years, {p.gender}
-          </li>
-        ))}
-      </ul>
-    </div>
+      {error && <Typography color="error">{error}</Typography>}
+
+      <Paper sx={{ mt: 2, p: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Age</TableCell>
+              <TableCell>Gender</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {patients.map((p) => (
+              <TableRow key={p.id}>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>{p.email}</TableCell>
+                <TableCell>{p.age}</TableCell>
+                <TableCell>{p.gender}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Container>
   );
 };
 
